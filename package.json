@@ -1,0 +1,32 @@
+{
+  "name": "webapp",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "make build",
+    "start": "make start",
+    "clean": "make clean"
+  },
+  "keywords": ["BuckleScript"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "bs-platform": "^2.1.0"
+  },
+  "dependencies": {
+    "@glennsl/bs-json": "^1.1.2",
+    "body-parser": "~1.18.2",
+    "bs-express": "0.0.6",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "jstransformer": "^1.0.0",
+    "morgan": "~1.9.0",
+    "pug": "^2.0.0-rc.4",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "reason-react": "^0.3.1",
+    "sequelize": "^4.31.2",
+    "serve-favicon": "~2.4.5",
+    "sqlite3": "^3.1.13"
+  }
+}
