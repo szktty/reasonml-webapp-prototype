@@ -35,7 +35,7 @@ module Basic = {
     "entries";
 };
 
-module Make = (Key: KanaeComparable.S) : (S with type key = Key.t) => {
+module Make = (Key: KanaeComparable.S) : (S with type key := Key.t) => {
   type key = Key.t;
   type t('value) = Basic.t(key, 'value);
   let length = m => Basic.size(m);
