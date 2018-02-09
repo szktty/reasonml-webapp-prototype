@@ -22,14 +22,24 @@ module Response = {
     external render :
       (t, string, Js.t('locals), ('error, string) => unit) => unit =
       "render";
+    [@bs.send] external append : (t, string, string) => string = "append";
+    [@bs.send] external get : t => string = "get";
+    [@bs.send] external location : (t, string) => unit = "location";
     [@bs.send] external send : (t, string) => unit = "send";
+    [@bs.send] external status : (t, int) => t = "status";
+    [@bs.send] external type_ : (t, string) => string = "type";
   };
   type t = Basic.t;
   let from = (js: Basic.t) : t => js;
+  let append = Basic.append;
+  let location = Basic.location;
+  let get = Basic.get;
   let render =
       (res, ~view, ~locals, ~f: (~error: 'error, ~html: string) => unit) =>
     Basic.render(res, view, locals, (error, html) => f(~error, ~html));
   let send = Basic.send;
+  let status = Basic.status;
+  let type_ = Basic.type_;
 };
 
 module Router = {
@@ -40,9 +50,14 @@ module Router = {
     [@bs.send] external use : (t, string, handler) => unit = "use";
   };
   type t = Basic.t;
-  type handler = (Request.t, Response.t, unit => unit) => unit;
+  type handler =
+    (~request: Request.t, ~response: Response.t, ~next: unit => unit) => unit;
   let create = Basic.create;
   let use = (router, ~path, ~f) => Basic.use(router, path, f);
+  let middleware0 =
+      (router, ~request: Request.t, ~response: Response.t, ~next: unit => unit) =>
+    ();
+  let middleware: t => handler = router => middleware0(router);
 };
 
 module App = {
