@@ -20,7 +20,7 @@ module View =
 let view = View.create("index");
 
 /* get "/" */
-let router = (~request, ~response, ~next) => {
+let handler = (~request, ~response, ~next) => {
   View.render(
     view,
     ~response,

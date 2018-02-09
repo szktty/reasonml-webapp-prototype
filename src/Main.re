@@ -12,4 +12,4 @@ App.set(app, App.Settings.ViewEngine(Pug));
 App.set(app, App.Settings.Views([Path.join(Path.cwd(), "views")]));
 
 /* get "/" */
-App.use(app, ~path="/", ~f=Index.router);
+App.use(app, ~path="/", ~f=Index.handler);
