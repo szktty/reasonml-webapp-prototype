@@ -3,3 +3,8 @@ extends layout
 block content
   h1!=title
   p Hello, #{name}!
+  form(method="post" action="login")
+    h1 Login
+    br
+    input(type="text" name="id")
+    button Login
