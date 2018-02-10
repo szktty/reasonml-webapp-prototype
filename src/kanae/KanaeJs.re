@@ -2,6 +2,21 @@ include Js;
 
 type any = t(unit);
 
+module Falseable = {
+  type t('a);
+  let from = (opt: option('a)) : t('a) =>
+    switch opt {
+    | None => Reason.Obj.magic(Js.false_)
+    | Some(value) => Reason.Obj.magic(value)
+    };
+  let to_ = (opt: t('a)) : option('a) =>
+    if (Reason.Obj.magic(opt) === Js.false_) {
+      None;
+    } else {
+      Some(Reason.Obj.magic(opt));
+    };
+};
+
 module Any = {
   type t = any;
   type type_ =
