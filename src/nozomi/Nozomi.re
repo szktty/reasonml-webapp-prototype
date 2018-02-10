@@ -10,9 +10,63 @@ module Error = {
 module Request = {
   module Basic = {
     type t;
+    [@bs.get] external method_ : t => string = "method";
+    [@bs.get] external originalURL : t => string = "originalUrl";
+    [@bs.get] external path : t => string = "path";
+    [@bs.get] external protocol : t => string = "protocol";
+    [@bs.get] external query : t => Js.Json.t = "query";
+    [@bs.get] external secure : t => Js.boolean = "secure";
   };
+  type method =
+    | Get
+    | Post
+    | Put
+    | Delete;
+  type protocol =
+    | HTTP
+    | HTTPS
+    | Other(string);
   type t = Basic.t;
   let from = (js: Basic.t) : t => js;
+  let method = Basic.method;
+  let isSecure = req => Basic.secure(req) |> Js.to_bool;
+  let originalURL = Basic.originalURL;
+  let path = Basic.path;
+  let protocol = req =>
+    switch (Basic.protocol(req)) {
+    | "http" => HTTP
+    | "https" => HTTPS
+    | other => Other(other)
+    };
+  let query = (req, path: string) : option(string) => {
+    let empty = Js.Dict.empty() |> Js.Json.object_;
+    let rec query0 = (comps, accu: Js.Json.t) : Js.Json.t =>
+      switch comps {
+      | [] => accu
+      | [comp] =>
+        switch (Js.Json.decodeObject(accu)) {
+        | None => empty
+        | Some(obj) =>
+          switch (Js.Dict.get(obj, comp)) {
+          | None => empty
+          | Some(value) => value
+          }
+        }
+      | [comp, ...comps] =>
+        switch (Js.Json.decodeObject(accu)) {
+        | None => empty
+        | Some(obj) =>
+          switch (Js.Dict.get(obj, comp)) {
+          | None => empty
+          | Some(value) => query0(comps, value)
+          }
+        }
+      };
+    switch (KanaeString.split(path, ~on='.')) {
+    | [] => None
+    | comps => query0(comps, Basic.query(req)) |> Js.Json.decodeString
+    };
+  };
 };
 
 module Response = {
@@ -80,7 +134,7 @@ module App = {
   module Basic = {
     type t;
     type renderer = (unit /* error */, string) => [@bs.uncurry] unit;
-    [@bs.module "express"] [@bs.val] external express : unit => t = "Express";
+    [@bs.val] external express : unit => t = "Express";
     [@bs.send]
     external render : (t, Js.t('local), renderer) => unit = "render";
     [@bs.send] external listenPath : (t, string) => unit = "listen";
@@ -250,12 +304,11 @@ module StaticOptions = {
 
 module Basic = {
   type t;
-  [@bs.val] external top : t = "Express";
   [@bs.send]
   external static : (t, string, StaticOptions.Basic.t) => t = "static";
 };
 
-let top = Basic.top;
+let top = App.Basic.express;
 
 let express = App.create;
 
