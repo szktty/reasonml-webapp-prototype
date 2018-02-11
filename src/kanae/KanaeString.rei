@@ -15,7 +15,7 @@ let iteri: (string, ~f: (~i: int, ~elt: char) => unit) => unit;
 let map: (string, ~f: char => char) => string;
 
 let reduce:
-  (string, ~init: 'accu, ~f: (~accu: 'accu, ~c: charhb) => 'accu) => 'accu;
+  (string, ~init: 'accu, ~f: (~accu: 'accu, ~elt: char) => 'accu) => 'accu;
 
 let isPrefix: (string, string) => bool;
 

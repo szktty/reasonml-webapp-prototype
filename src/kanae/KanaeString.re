@@ -67,7 +67,7 @@ let join = (~sep="", comps) => {
 
 let reduce = (s, ~init, ~f) => {
   let accu0 = ref(init);
-  iter(s, ~f=c => accu0 := f(~elt=c, ~accu=accu0^));
+  iter(s, ~f=c => accu0 := f(~accu=accu0^, ~elt=c));
   accu0^;
 };
 
@@ -76,7 +76,7 @@ let split = (s, ~on: char) : list(string) => {
     reduce(
       s,
       ~init=([], []),
-      ~f=(~elt as c: char, ~accu as (last: list(char), accu)) =>
+      ~f=(~accu as (last: list(char), accu), ~elt as c: char) =>
       if (c == on) {
         ([], [fromCharList(last), ...accu]);
       } else {
