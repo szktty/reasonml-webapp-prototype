@@ -136,7 +136,7 @@ module App = {
   module Basic = {
     type t;
     type renderer = (unit /* error */, string) => [@bs.uncurry] unit;
-    [@bs.val] external express : unit => t = "Express";
+    [@bs.module] external express : unit => t = "express";
     [@bs.send]
     external render : (t, Js.t('local), renderer) => unit = "render";
     [@bs.send] external listenPath : (t, string) => unit = "listen";
