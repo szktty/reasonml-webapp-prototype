@@ -10,6 +10,7 @@ module Error = {
 module Request = {
   module Basic = {
     type t;
+    [@bs.get] external body : t => string = "body";
     [@bs.get] external method_ : t => string = "method";
     [@bs.get] external originalURL : t => string = "originalUrl";
     [@bs.get] external path : t => string = "path";
@@ -28,6 +29,7 @@ module Request = {
     | Other(string);
   type t = Basic.t;
   let from = (js: Basic.t) : t => js;
+  let body = Basic.body;
   let method = Basic.method;
   let isSecure = req => Basic.secure(req) |> Js.to_bool;
   let originalURL = Basic.originalURL;
