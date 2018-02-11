@@ -1,25 +1,28 @@
 module Basic = {
   type t;
-  type handler =
-    (
-      NozomiRequest.Basic.t,
-      NozomiResponse.Basic.t,
-      unit => [@bs.uncurry] unit
-    ) =>
-    [@bs.uncurry] unit;
   [@bs.module "express"] external create : unit => t = "Router";
-  [@bs.send] external use : (t, string, handler) => unit = "use";
+  [@bs.send]
+  external use : (t, string, NozomiMiddleware.Basic.t) => unit = "use";
+  [@bs.send]
+  external all : (t, string, NozomiMiddleware.Basic.t) => unit = "all";
+  [@bs.send]
+  external get : (t, string, NozomiMiddleware.Basic.t) => unit = "get";
+  [@bs.send]
+  external post : (t, string, NozomiMiddleware.Basic.t) => unit = "post";
 };
 
-type t = Basic.t;
-
-type handler =
-  (
-    ~request: NozomiRequest.t,
-    ~response: NozomiResponse.t,
-    ~next: unit => [@bs.uncurry] unit
-  ) =>
-  unit;
+include
+  NozomiRoutable.Make(
+    {
+      type router = Basic.t;
+      let all = (router: router, path, handler: NozomiMiddleware.t) =>
+        Basic.all(router, path, NozomiMiddleware.basic(handler));
+      let get = (router: router, path, handler: NozomiMiddleware.t) =>
+        Basic.get(router, path, NozomiMiddleware.basic(handler));
+      let post = (router: router, path, handler: NozomiMiddleware.t) =>
+        Basic.post(router, path, NozomiMiddleware.basic(handler));
+    }
+  );
 
 let create = Basic.create;
 

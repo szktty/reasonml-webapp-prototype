@@ -26,6 +26,8 @@ type t = Basic.t;
 
 let from = (js: Basic.t) : t => js;
 
+let basic = (req: t) : Basic.t => req;
+
 let body = Basic.body;
 
 let method = Basic.method;

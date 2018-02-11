@@ -18,6 +18,8 @@ type t = Basic.t;
 
 let from = (js: Basic.t) : t => js;
 
+let basic = (req: t) : Basic.t => req;
+
 let append = Basic.append;
 
 let location = Basic.location;
