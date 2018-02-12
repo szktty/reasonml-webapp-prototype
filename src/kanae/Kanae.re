@@ -1,5 +1,7 @@
 module Array = KanaeArray;
 
+module Binary = KanaeBinary;
+
 module Bool = KanaeBool;
 
 module Buffer = KanaeBuffer;
