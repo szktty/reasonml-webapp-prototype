@@ -22,6 +22,35 @@ type protocol =
   | HTTPS
   | Other(string);
 
+module Body = {
+  type t =
+    | Undefined
+    | JSON(Js.Json.t)
+    | Binary(Binary.t)
+    | String(string)
+    | Map(String.Map.t(string));
+  let json = body =>
+    switch body {
+    | JSON(data) => Some(data)
+    | _ => None
+    };
+  let binary = body =>
+    switch body {
+    | Binary(data) => Some(data)
+    | _ => None
+    };
+  let string = body =>
+    switch body {
+    | String(data) => Some(data)
+    | _ => None
+    };
+  let map = body =>
+    switch body {
+    | Map(data) => Some(data)
+    | _ => None
+    };
+};
+
 type t = Basic.t;
 
 let from = (js: Basic.t) : t => js;
