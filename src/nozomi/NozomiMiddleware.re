@@ -16,6 +16,10 @@ type t =
   ) =>
   [@bs.uncurry] unit;
 
+let from = (f: Basic.t) : t =>
+  (~request, ~response, ~next) =>
+    f(NozomiRequest.from(request), NozomiResponse.from(response), next);
+
 let bindBasic = (f, req, res, next) =>
   f(
     ~request=NozomiRequest.from(req),

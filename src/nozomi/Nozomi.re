@@ -1,5 +1,7 @@
 module App = NozomiApp;
 
+module BodyParser = NozomiBodyParser;
+
 module Error = NozomiError;
 
 module Request = NozomiRequest;
