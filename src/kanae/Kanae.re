@@ -14,6 +14,8 @@ module Comparable = KanaeComparable;
 
 module Date = KanaeDate;
 
+module Digest = KanaeDigest;
+
 module Error = KanaeError;
 
 module Float = KanaeFloat;
