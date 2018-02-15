@@ -43,6 +43,8 @@ module Settings = {
 
 type t = Basic.t;
 
+type neverReturns = unit;
+
 let create = Basic.express;
 
 let set = (app, setting) =>
@@ -52,7 +54,7 @@ let set = (app, setting) =>
     Basic.set(app, "view engine", ViewEngine.toJS(engine))
   };
 
-let listen = (app, ~path) => Basic.listenPath(app, path);
+let listen = (app, ~path) : neverReturns => Basic.listenPath(app, path);
 
 let start = (~host=?, ~backlog=?, app, ~port: int) =>
   Basic.listenPort(
