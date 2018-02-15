@@ -16,7 +16,7 @@
     "@glennsl/bs-json": "^1.1.2",
     "body-parser": "~1.18.2",
     "bs-express": "0.0.6",
-    "cookie-parser": "~1.4.3",
+    "cookie-parser": "^1.4.3",
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "jstransformer": "^1.0.0",

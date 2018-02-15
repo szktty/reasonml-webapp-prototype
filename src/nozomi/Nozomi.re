@@ -2,6 +2,8 @@ module App = NozomiApp;
 
 module BodyParser = NozomiBodyParser;
 
+module CookieParser = NozomiCookieParser;
+
 module Error = NozomiError;
 
 module Request = NozomiRequest;
