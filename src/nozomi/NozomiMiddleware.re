@@ -1,5 +1,5 @@
 module Basic = {
-  type t =
+  type f =
     (
       NozomiRequest.Basic.t,
       NozomiResponse.Basic.t,
@@ -8,7 +8,7 @@ module Basic = {
     [@bs.uncurry] unit;
 };
 
-type t =
+type f =
   (
     ~request: NozomiRequest.t,
     ~response: NozomiResponse.t,
@@ -16,7 +16,7 @@ type t =
   ) =>
   [@bs.uncurry] unit;
 
-let from = (f: Basic.t) : t =>
+let from = (f: Basic.f) : f =>
   (~request, ~response, ~next) =>
     f(NozomiRequest.from(request), NozomiResponse.from(response), next);
 
@@ -27,4 +27,4 @@ let bindBasic = (f, req, res, next) =>
     ~next
   );
 
-let basic = (f: t) : Basic.t => bindBasic(f);
+let basic = (f: f) : Basic.f => bindBasic(f);

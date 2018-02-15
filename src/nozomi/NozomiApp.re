@@ -11,17 +11,17 @@ module Basic = {
     "listen";
   [@bs.send] external set : (t, string, 'value) => unit = "set";
   [@bs.send]
-  external use : (t, string, NozomiMiddleware.Basic.t) => unit = "use";
+  external use : (t, string, NozomiMiddleware.Basic.f) => unit = "use";
   [@bs.send]
-  external all : (t, string, NozomiMiddleware.Basic.t) => unit = "get";
+  external all : (t, string, NozomiMiddleware.Basic.f) => unit = "get";
   [@bs.send]
-  external get : (t, string, NozomiMiddleware.Basic.t) => unit = "get";
+  external get : (t, string, NozomiMiddleware.Basic.f) => unit = "get";
   [@bs.send]
-  external post : (t, string, NozomiMiddleware.Basic.t) => unit = "post";
+  external post : (t, string, NozomiMiddleware.Basic.f) => unit = "post";
   [@bs.send]
-  external put : (t, string, NozomiMiddleware.Basic.t) => unit = "put";
+  external put : (t, string, NozomiMiddleware.Basic.f) => unit = "put";
   [@bs.send]
-  external delete : (t, string, NozomiMiddleware.Basic.t) => unit = "delete";
+  external delete : (t, string, NozomiMiddleware.Basic.f) => unit = "delete";
 };
 
 module ViewEngine = {
@@ -88,11 +88,11 @@ include
   NozomiRoutable.Make(
     {
       type router = t;
-      let all = (router: router, path, handler: NozomiMiddleware.t) =>
+      let all = (router: router, path, handler: NozomiMiddleware.f) =>
         Basic.all(router, path, NozomiMiddleware.basic(handler));
-      let get = (router: router, path, handler: NozomiMiddleware.t) =>
+      let get = (router: router, path, handler: NozomiMiddleware.f) =>
         Basic.get(router, path, NozomiMiddleware.basic(handler));
-      let post = (router: router, path, handler: NozomiMiddleware.t) =>
+      let post = (router: router, path, handler: NozomiMiddleware.f) =>
         Basic.post(router, path, NozomiMiddleware.basic(handler));
     }
   );

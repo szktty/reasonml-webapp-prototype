@@ -4,18 +4,18 @@ type method_ =
 
 module type Router = {
   type router;
-  let all: (router, string, NozomiMiddleware.t) => unit;
-  let get: (router, string, NozomiMiddleware.t) => unit;
-  let post: (router, string, NozomiMiddleware.t) => unit;
+  let all: (router, string, NozomiMiddleware.f) => unit;
+  let get: (router, string, NozomiMiddleware.f) => unit;
+  let post: (router, string, NozomiMiddleware.f) => unit;
   /*
    let params: t => unit;
-   let use: (t, string, NozomiMiddleware.t) => unit;
+   let use: (t, string, NozomiMiddleware.f) => unit;
    */
 };
 
 module type S = {
   type router;
-  let all: (router, string, NozomiMiddleware.t) => unit;
+  let all: (router, string, NozomiMiddleware.f) => unit;
 };
 
 module Make = (R: Router) : (S with type router := R.router) => {

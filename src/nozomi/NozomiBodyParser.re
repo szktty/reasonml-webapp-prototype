@@ -2,13 +2,13 @@ open Kanae;
 
 module Basic = {
   [@bs.module "body-parser"] [@bs.val]
-  external json : unit => NozomiMiddleware.Basic.t = "json";
+  external json : unit => NozomiMiddleware.Basic.f = "json";
   [@bs.module "body-parser"] [@bs.val]
-  external raw : unit => NozomiMiddleware.Basic.t = "raw";
+  external raw : unit => NozomiMiddleware.Basic.f = "raw";
   [@bs.module "body-parser"] [@bs.val]
-  external text : unit => NozomiMiddleware.Basic.t = "text";
+  external text : unit => NozomiMiddleware.Basic.f = "text";
   [@bs.module "body-parser"] [@bs.val]
-  external urlencoded : unit => NozomiMiddleware.Basic.t = "urlencoded";
+  external urlencoded : unit => NozomiMiddleware.Basic.f = "urlencoded";
 };
 
 module URLEncodedOptions = {
