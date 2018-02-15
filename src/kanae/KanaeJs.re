@@ -48,6 +48,11 @@ module Any = {
   let fromString = (value: string) : t => Reason.Obj.magic(value); /* TODO */
   let toString = (value: t) : string => Reason.Obj.magic(value);
   let toStringOrNull = (value: t) : option(string) => Reason.Obj.magic(value);
+  let string = (value: t) : option(string) =>
+    switch (type_(value)) {
+    | String => Some(Reason.Obj.magic(value))
+    | _ => None
+    };
   /* TODO: iter, map */
   let diet = (js: Js.t('a)) : Js.t('a) => {
     let rec diet0 = (js: Js.t('a)) =>
