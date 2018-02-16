@@ -3,4 +3,4 @@ module Basic = {
   external flash : unit => NozomiMiddleware.Basic.f = "connect-flash";
 };
 
-let flash = () => Basic.flash() |> NozomiMiddleware.from;
+let middleware = () => Basic.flash() |> NozomiMiddleware.from;

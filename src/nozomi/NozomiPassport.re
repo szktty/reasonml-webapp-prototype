@@ -55,7 +55,7 @@ module Basic = {
     "authenticate";
 };
 
-let initialize = () => Basic.initialize() |> NozomiMiddleware.from;
+let middleware = () => Basic.initialize() |> NozomiMiddleware.from;
 
 let session = () => Basic.session() |> NozomiMiddleware.from;
 
