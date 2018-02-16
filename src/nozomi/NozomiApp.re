@@ -66,8 +66,8 @@ let start = (~host=?, ~backlog=?, app, ~port: int) =>
 
 let use =
     (
+      ~path="*",
       app,
-      ~path,
       ~f:
          (
            ~request: NozomiRequest.t,
