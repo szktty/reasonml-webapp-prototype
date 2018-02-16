@@ -2,7 +2,7 @@ include Js;
 
 type any = t(unit);
 
-module Falseable = {
+module False = {
   type t('a);
   let from = (opt: option('a)) : t('a) =>
     switch opt {
