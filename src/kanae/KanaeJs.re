@@ -15,6 +15,8 @@ module False = {
     } else {
       Some(Reason.Obj.magic(opt));
     };
+  let some = value => from(Some(value));
+  let none = () => from(None);
 };
 
 module Any = {
