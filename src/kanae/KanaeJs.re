@@ -47,6 +47,7 @@ module Any = {
       }
     | _ => failwith("unknown type")
     };
+  let return = (value: 'a) : t => Reason.Obj.magic(value);
   let fromString = (value: string) : t => Reason.Obj.magic(value); /* TODO */
   let toString = (value: t) : string => Reason.Obj.magic(value);
   let toStringOrNull = (value: t) : option(string) => Reason.Obj.magic(value);
