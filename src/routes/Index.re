@@ -21,6 +21,8 @@ let view = View.create("index");
 
 /* get "/" */
 let handler = (~request, ~response, ~next) => {
+  Js.log("Index handler");
+  Js.log(Request.originalURL(request));
   View.render(
     view,
     ~response,

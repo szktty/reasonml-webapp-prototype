@@ -43,7 +43,7 @@ let stringBody = (req, ~key) =>
 
 let method = Basic.method;
 
-let isSecure = req => Basic.secure(req) |> Js.to_bool;
+let isSecure = req => Basic.secure(req) |> Js.toBool;
 
 let originalURL = Basic.originalURL;
 
@@ -80,7 +80,7 @@ let query = (req, path: string) : option(string) => {
         }
       }
     };
-  switch (KanaeString.split(path, ~on='.')) {
+  switch (String.split(path, ~on='.')) {
   | [] => None
   | comps => query0(comps, Basic.query(req)) |> Js.Json.decodeString
   };

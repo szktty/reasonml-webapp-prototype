@@ -21,7 +21,7 @@ module LocalStrategy = {
       (
         string,
         string,
-        (Js.null('error), Js.False.t('ok), Js.null('invalid)) => unit
+        (Js.Null.t('error), Js.False.t('ok), Js.Null.t('invalid)) => unit
       ) =>
       unit;
     [@bs.module "passport-local"] [@bs.new]
@@ -35,10 +35,16 @@ module LocalStrategy = {
   let create = (~f) => {
     let basicF = (username, password, done_) =>
       switch (f(~username, ~password)) {
-      | Done.OK(value) => done_(Js.null, Js.False.some(value), Js.null)
+      | Done.OK(value) =>
+        done_(Js.Null.empty, Js.False.some(value), Js.Null.empty)
       | Invalid(error) =>
-        done_(Js.null, Js.False.none(), Js.Null.return(basicInvalid(error)))
-      | Error(error) => done_(Js.Null.return(error), Js.False.none(), Js.null)
+        done_(
+          Js.Null.empty,
+          Js.False.none(),
+          Js.Null.return(basicInvalid(error))
+        )
+      | Error(error) =>
+        done_(Js.Null.return(error), Js.False.none(), Js.Null.empty)
       };
     Basic.create(basicF);
   };
