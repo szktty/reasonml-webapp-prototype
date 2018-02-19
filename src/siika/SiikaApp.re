@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 module SyncOptions = {
   module Basic = {
@@ -13,22 +13,21 @@ module SyncOptions = {
     alter: option(bool)
   };
   let create = (~force=?, ~alter=?, ()) => {force, alter};
-  let toBasic = opts =>
-    Js.Primitive.diet({"force": opts.force, "alter": opts.alter});
+  let toBasic = opts => Js.diet({"force": opts.force, "alter": opts.alter});
 };
 
 module Options = {
   module Basic = {
     type t = {
       .
-      "host": Js.null(string),
-      "port": Js.null(int),
+      "host": Js.Null.t(string),
+      "port": Js.Null.t(int),
       "database": string,
-      "username": Js.null(string),
-      "password": Js.null(string),
+      "username": Js.Null.t(string),
+      "password": Js.Null.t(string),
       "dialect": string,
-      "storage": Js.null(string),
-      "protocol": Js.null(string)
+      "storage": Js.Null.t(string),
+      "protocol": Js.Null.t(string)
     };
   };
   type dialect =
@@ -66,11 +65,11 @@ module Options = {
     protocol
   };
   let toBasic = (opts: t) : Basic.t => {
-    "host": Js.Null.from_opt(opts.host),
-    "port": Js.Null.from_opt(opts.port),
+    "host": Js.Null.fromOption(opts.host),
+    "port": Js.Null.fromOption(opts.port),
     "database": opts.database,
-    "username": Js.Null.from_opt(opts.username),
-    "password": Js.Null.from_opt(opts.password),
+    "username": Js.Null.fromOption(opts.username),
+    "password": Js.Null.fromOption(opts.password),
     "dialect":
       switch opts.dialect {
       | MySQL => "mysql"
@@ -79,13 +78,13 @@ module Options = {
       | MSSQL => "mssql"
       },
     "storage":
-      Js.Null.from_opt(
+      Js.Null.fromOption(
         switch opts.dialect {
         | SQLite(path) => Some(path)
         | _ => None
         }
       ),
-    "protocol": Js.Null.from_opt(opts.protocol)
+    "protocol": Js.Null.fromOption(opts.protocol)
   };
 };
 

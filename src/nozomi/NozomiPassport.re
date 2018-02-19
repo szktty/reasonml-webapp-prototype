@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 module Done = {
   type t('ok, 'invalid, 'error) =

@@ -72,8 +72,8 @@ module Where = {
 module Basic = {
   type t = {
     .
-    "attributes": Js.null(unit),
-    "where": Js.null(Js.Json.t)
+    "attributes": Js.Null.t(unit),
+    "where": Js.Null.t(Js.Json.t)
   };
 };
 

@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 module Basic = {
   type options = {
@@ -6,13 +6,13 @@ module Basic = {
     "cookie": {
       .
       "path": string,
-      "httpOnly": Js.boolean,
-      "secure": Js.boolean,
-      "maxAge": Js.null(int),
+      "httpOnly": Js.Boolean.t,
+      "secure": Js.Boolean.t,
+      "maxAge": Js.Null.t(int),
       "sameSite": Js.False.t(string)
     },
     "secret": string,
-    "resave": Js.boolean
+    "resave": Js.Boolean.t
   };
   [@bs.module]
   external session : options => NozomiMiddleware.Basic.f = "express-session";
@@ -36,7 +36,7 @@ let middleware =
       "path": cookiePath,
       "httpOnly": Js.fromBool(cookieHTTPOnly),
       "secure": Js.fromBool(cookieSecure),
-      "maxAge": Js.Null.from_opt(cookieMaxAge),
+      "maxAge": Js.Null.fromOption(cookieMaxAge),
       "sameSite":
         switch cookieSameSite {
         | `None => Js.False.none()

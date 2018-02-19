@@ -1,18 +1,18 @@
-open Kanae;
+open Kanae.Base;
 
 module StaticOptions = {
   module Basic = {
     type t = {
       .
       "dotfiles": string,
-      "etag": Js.boolean,
+      "etag": Js.Boolean.t,
       "extensions": Js.False.t(array(string)),
-      "fallthrough": Js.boolean,
-      "immutable": Js.boolean,
+      "fallthrough": Js.Boolean.t,
+      "immutable": Js.Boolean.t,
       "index": Js.False.t(string),
-      "lastModified": Js.boolean,
+      "lastModified": Js.Boolean.t,
       "maxAge": int,
-      "redirect": Js.boolean,
+      "redirect": Js.Boolean.t,
       "setHeaders":
         (NozomiResponse.Basic.t, string, string) => [@bs.uncurry] unit
     };

@@ -1,14 +1,14 @@
-open Kanae;
+open Kanae.Base;
 
 module Basic = {
   type t;
-  [@bs.get] external body : t => Js.undefined(Js.Dict.t(Js.Any.t)) = "body";
+  [@bs.get] external body : t => Js.Undefined.t(Js.Dict.t(Js.Any.t)) = "body";
   [@bs.get] external method_ : t => string = "method";
   [@bs.get] external originalURL : t => string = "originalUrl";
   [@bs.get] external path : t => string = "path";
   [@bs.get] external protocol : t => string = "protocol";
   [@bs.get] external query : t => Js.Json.t = "query";
-  [@bs.get] external secure : t => Js.boolean = "secure";
+  [@bs.get] external secure : t => Js.Boolean.t = "secure";
 };
 
 type method =
@@ -30,7 +30,7 @@ let basic = (req: t) : Basic.t => req;
 
 let body = (req, ~key) : option(Js.Any.t) =>
   Basic.body(req)
-  |> Js.Undefined.to_opt
+  |> Js.Undefined.toOption
   |> Option.findMap(~f=dict => {
        Js.log("hello");
        Js.log(Basic.body(req));

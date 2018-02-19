@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 module Basic = {
   type t;
@@ -7,7 +7,7 @@ module Basic = {
   [@bs.send] external render : (t, Js.t('local), renderer) => unit = "render";
   [@bs.send] external listenPath : (t, string) => unit = "listen";
   [@bs.send]
-  external listenPort : (t, int, Js.null(string), Js.null(string)) => unit =
+  external listenPort : (t, int, Js.Null.t(string), Js.Null.t(string)) => unit =
     "listen";
   [@bs.send] external set : (t, string, 'value) => unit = "set";
   [@bs.send]
@@ -60,8 +60,8 @@ let start = (~host=?, ~backlog=?, app, ~port: int) =>
   Basic.listenPort(
     app,
     port,
-    Js.Null.from_opt(host),
-    Js.Null.from_opt(backlog)
+    Js.Null.fromOption(host),
+    Js.Null.fromOption(backlog)
   );
 
 let use =

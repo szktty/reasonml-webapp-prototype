@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 module Model = SiikaModel;
 
@@ -43,10 +43,10 @@ module Generic = {
 
 module Make = (S: S) => {
   module Getter = {
-    let string = Js.Any.toString;
+    let string = Js.Any.string;
   };
   module Setter = {
-    let string = Js.Any.fromString;
+    let string = (value: string) : Js.Any.t => Js.Any.return(value);
   };
   let modelRef: ref(option(Model.t)) = ref(None);
   let model = () => Option.valueExn(modelRef^);

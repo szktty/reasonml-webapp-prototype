@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 module Basic = {
   [@bs.module]

@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 module Basic = {
   [@bs.module "body-parser"] [@bs.val]
@@ -15,8 +15,8 @@ module URLEncodedOptions = {
   module Basic = {
     type t = {
       .
-      "extended": Js.boolean,
-      "inflate": Js.boolean
+      "extended": Js.Boolean.t,
+      "inflate": Js.Boolean.t
     };
   };
   type t = {

@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 type handler = (~error: NozomiError.t, ~html: string) => unit;
 

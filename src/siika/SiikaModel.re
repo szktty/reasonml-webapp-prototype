@@ -1,4 +1,4 @@
-open Kanae;
+open Kanae.Base;
 
 module DataType = {
   type t =
@@ -40,7 +40,7 @@ module Attribute = {
   };
   let toBasic = attr : Basic.t => {
     let diet =
-      Js.Primitive.diet({
+      Js.diet({
         "type": DataType.toJSON(attr.dataType),
         "allowNull": attr.allowNull,
         "defaultValue": attr.defaultValue,
@@ -82,7 +82,7 @@ module Attributes = {
   };
   let toBasic = attrs : Basic.t => {
     let dict = Js.Dict.empty();
-    List.iteri(attrs, ~f=(~i, ~elt as attr: Attribute.t) =>
+    List.eachi(attrs, ~f=(~i, ~elt as attr: Attribute.t) =>
       Js.Dict.set(dict, attr.name, Attribute.toBasic(attr))
     );
     dict;
