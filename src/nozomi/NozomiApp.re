@@ -11,17 +11,19 @@ module Basic = {
     "listen";
   [@bs.send] external set : (t, string, 'value) => unit = "set";
   [@bs.send]
-  external use : (t, string, NozomiMiddleware.Basic.f) => unit = "use";
+  external use : (t, string, array(NozomiMiddleware.Basic.f)) => unit = "use";
   [@bs.send]
-  external all : (t, string, NozomiMiddleware.Basic.f) => unit = "get";
+  external all : (t, string, array(NozomiMiddleware.Basic.f)) => unit = "get";
   [@bs.send]
-  external get : (t, string, NozomiMiddleware.Basic.f) => unit = "get";
+  external get : (t, string, array(NozomiMiddleware.Basic.f)) => unit = "get";
   [@bs.send]
-  external post : (t, string, NozomiMiddleware.Basic.f) => unit = "post";
+  external post : (t, string, array(NozomiMiddleware.Basic.f)) => unit =
+    "post";
   [@bs.send]
-  external put : (t, string, NozomiMiddleware.Basic.f) => unit = "put";
+  external put : (t, string, array(NozomiMiddleware.Basic.f)) => unit = "put";
   [@bs.send]
-  external delete : (t, string, NozomiMiddleware.Basic.f) => unit = "delete";
+  external delete : (t, string, array(NozomiMiddleware.Basic.f)) => unit =
+    "delete";
 };
 
 module ViewEngine = {
@@ -64,35 +66,18 @@ let start = (~host=?, ~backlog=?, app, ~port: int) =>
     Js.Null.fromOption(backlog)
   );
 
-let use =
-    (
-      ~path="*",
-      app,
-      ~f:
-         (
-           ~request: NozomiRequest.t,
-           ~response: NozomiResponse.t,
-           ~next: unit => unit
-         ) =>
-         unit
-    ) =>
-  Basic.use(app, path, (req, res, next) =>
-    f(
-      ~request=NozomiRequest.from(req),
-      ~response=NozomiResponse.from(res),
-      ~next
-    )
-  );
+let use = (~path="*", app, ~handlers: list(NozomiMiddleware.f)) =>
+  Basic.use(app, path, NozomiMiddleware.basicArray(handlers));
 
 include
   NozomiRoutable.Make(
     {
       type router = t;
-      let all = (router: router, path, handler: NozomiMiddleware.f) =>
-        Basic.all(router, path, NozomiMiddleware.basic(handler));
-      let get = (router: router, path, handler: NozomiMiddleware.f) =>
-        Basic.get(router, path, NozomiMiddleware.basic(handler));
-      let post = (router: router, path, handler: NozomiMiddleware.f) =>
-        Basic.post(router, path, NozomiMiddleware.basic(handler));
+      let all = (router: router, ~path, ~handlers: list(NozomiMiddleware.f)) =>
+        Basic.all(router, path, NozomiMiddleware.basicArray(handlers));
+      let get = (router: router, ~path, ~handlers: list(NozomiMiddleware.f)) =>
+        Basic.get(router, path, NozomiMiddleware.basicArray(handlers));
+      let post = (router: router, ~path, ~handlers: list(NozomiMiddleware.f)) =>
+        Basic.post(router, path, NozomiMiddleware.basicArray(handlers));
     }
   );

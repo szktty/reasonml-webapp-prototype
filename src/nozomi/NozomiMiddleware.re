@@ -1,3 +1,5 @@
+open Kanae.Base;
+
 module Basic = {
   type f =
     (
@@ -28,3 +30,5 @@ let bindBasic = (f, req, res, next) =>
   );
 
 let basic = (f: f) : Basic.f => bindBasic(f);
+
+let basicArray = fs => List.map(fs, ~f=basic) |> List.toArray;

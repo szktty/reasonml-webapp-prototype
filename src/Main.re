@@ -11,11 +11,11 @@ App.set(app, App.Settings.ViewEngine(Pug));
 /* set template files */
 App.set(app, App.Settings.Views([Path.join(Path.cwd(), "views")]));
 
-App.use(app, ~f=Session.middleware(~secret="foobarbaz", ()));
+App.use(app, ~handlers=[Session.middleware(~secret="foobarbaz", ())]);
 
-App.use(app, ~f=ConnectFlash.middleware());
+App.use(app, ~handlers=[ConnectFlash.middleware()]);
 
-App.use(app, ~f=Passport.middleware());
+App.use(app, ~handlers=[Passport.middleware()]);
 
 Passport.use(
   Passport.LocalStrategy.create(~f=(~username, ~password) => {
@@ -29,21 +29,22 @@ Passport.use(
 App.use(
   app,
   ~path="/login",
-  ~f=
+  ~handlers=[
     Passport.Authenticator.local(
       ~successRedirect="/",
       ~failureRedirect="/",
       ~failureFlash=true
     )
+  ]
 );
 
 /* body parser */
 /*App.use(app, ~f=BodyParser.json());*/
-App.use(app, ~f=BodyParser.urlencoded());
+App.use(app, ~handlers=[BodyParser.urlencoded()]);
 
-App.use(app, ~f=CookieParser.create());
+App.use(app, ~handlers=[CookieParser.create()]);
 
 /* get "/" */
-App.use(app, ~path="/", ~f=Index.handler);
+App.use(app, ~path="/", ~handlers=[Index.handler]);
 
-App.use(app, ~path="/login", ~f=Login.login);
+App.use(app, ~path="/login", ~handlers=[Login.login]);

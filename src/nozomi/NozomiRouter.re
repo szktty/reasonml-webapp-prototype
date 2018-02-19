@@ -2,25 +2,26 @@ module Basic = {
   type t;
   [@bs.module "express"] external create : unit => t = "Router";
   [@bs.send]
-  external use : (t, string, NozomiMiddleware.Basic.f) => unit = "use";
+  external use : (t, string, array(NozomiMiddleware.Basic.f)) => unit = "use";
   [@bs.send]
-  external all : (t, string, NozomiMiddleware.Basic.f) => unit = "all";
+  external all : (t, string, array(NozomiMiddleware.Basic.f)) => unit = "all";
   [@bs.send]
-  external get : (t, string, NozomiMiddleware.Basic.f) => unit = "get";
+  external get : (t, string, array(NozomiMiddleware.Basic.f)) => unit = "get";
   [@bs.send]
-  external post : (t, string, NozomiMiddleware.Basic.f) => unit = "post";
+  external post : (t, string, array(NozomiMiddleware.Basic.f)) => unit =
+    "post";
 };
 
 include
   NozomiRoutable.Make(
     {
       type router = Basic.t;
-      let all = (router: router, path, handler: NozomiMiddleware.f) =>
-        Basic.all(router, path, NozomiMiddleware.basic(handler));
-      let get = (router: router, path, handler: NozomiMiddleware.f) =>
-        Basic.get(router, path, NozomiMiddleware.basic(handler));
-      let post = (router: router, path, handler: NozomiMiddleware.f) =>
-        Basic.post(router, path, NozomiMiddleware.basic(handler));
+      let all = (router: router, ~path, ~handlers: list(NozomiMiddleware.f)) =>
+        Basic.all(router, path, NozomiMiddleware.basicArray(handlers));
+      let get = (router: router, ~path, ~handlers: list(NozomiMiddleware.f)) =>
+        Basic.get(router, path, NozomiMiddleware.basicArray(handlers));
+      let post = (router: router, ~path, ~handlers: list(NozomiMiddleware.f)) =>
+        Basic.post(router, path, NozomiMiddleware.basicArray(handlers));
     }
   );
 
